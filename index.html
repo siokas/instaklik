@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instaklik</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+    <style>
+      @media screen and (max-width: 600px) {
+        .accessibilityimage {
+          width: 140px;
+        }
+        #slideout {
+          width: 289px !important;
+        }
+      }
+      #slideout li.disabled {
+        pointer-events: none;
+        opacity: 0.7;
+      }
+      .alignRight {
+        text-align: right !important;
+      }
+      .alignLeft {
+        text-align: left !important;
+      }
+      .rtl {
+        direction: rtl;
+      }
+      .ltr {
+        direction: ltr;
+      }
+      .myLogo {
+        width: 40px;
+        padding-top: 10px;
+      }
+      #slideout {
+        position: fixed;
+        top: 40px;
+        left: -250px;
+        z-index: 10000;
+        direction: rtl;
+        font-size: 16px;
+        width: 303px;
+      }
+      #slideout ul {
+        background-color: #fff;
+        border: 1px solid #777;
+        width: 248px;
+        text-align: center;
+        padding: 20px;
+        float: left;
+      }
+      .accessibilityMenuButton {
+        display: block;
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #999;
+        margin-bottom: 3px;
+        cursor: pointer;
+        color: #444;
+        background-color: #fff;
+        font-weight: bold;
+      }
+      .accessibilityMenuButton:disabled {
+        border: 1px solid #ccc;
+        color: #ccc !important;
+        cursor: not-allowed;
+      }
+      .accessibilityMenuButton:focus,
+      .accessibilityMenuButton:active {
+        border: 1px solid #36f;
+        color: #36f;
+      }
+      #slideout2 ul {
+        padding-left: 0;
+        padding-right: 0;
+        border: 1px solid #777;
+        width: 250px;
+        padding: 20px;
+        z-index: 10000;
+        background-color: #fff;
+      }
+      .transparentButton {
+        padding: 10;
+        background-color: transparent;
+        border: none;
+      }
+      .leftContent {
+        margin-top: -38px;
+      }
+      @-moz-document url-prefix() {
+        #btnGrayscaleOn,
+        #btnGrayscaleOff {
+          display: none;
+        }
+      }
+
+      .espa {
+        top: 0;
+        right: 0;
+        width: 200px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .espa {
+          top: 50px;
+          left: 0;
+        }
+
+        #page-wrapper {
+          padding-top: 250px;
+        }
+      }
+
+      .greyscale {
+        filter: grayscale(1);
+      }
+
+      .contrast {
+        filter: contrast(5);
+      }
+
+      .underline-links {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body class="is-preload">
+    <a href="espa.pdf" target="_blank"
+      ><img
+        src="images/espa_square.jpg"
+        width="100"
+        alt="espa"
+        class="espa"
+        style="position: fixed; z-index: 999"
+    /></a>
+    <div id="slideout" style="right: -250px; top: 0">
+      <div
+        class="transparentButton pull-left"
+        onclick="toggleAccessibilityMenu()"
+      >
+        <img
+          class="accessibilityimage"
+          src="images/accessibility.png"
+          alt="Accessible Menu Icon"
+          title="Accessible Menu"
+        />
+      </div>
+      <ul class="ltr pull-left">
+        <li
+          class="accessibilityMenuButton alignLeft"
+          id="btnTextSizeOn"
+          onclick="setTextSize(true);"
+          aria-disabled="false"
+        >
+          <i class="fa fa-text-height" aria-hidden="true"></i
+          >&nbsp;&nbsp;Μεγαλύτερα Γράμματα
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft disabled"
+          id="btnTextSizeOff"
+          onclick="setTextSize(false);"
+          aria-disabled="true"
+        >
+          <i class="fa fa-font" aria-hidden="true"></i>&nbsp;&nbsp;Κανονικά
+          Γράμματα
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft"
+          id="btnHighContrastOn"
+          onclick="ToggleHighContrastMode(true);"
+          aria-disabled="false"
+        >
+          <i class="fa fa-adjust" aria-hidden="true"></i>&nbsp;&nbsp;Μεγαλύτερη
+          Αντίθεση
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft disabled"
+          id="btnHighContrastOff"
+          onclick="ToggleHighContrastMode(false);"
+          aria-disabled="true"
+        >
+          <i class="fa fa-adjust" aria-hidden="true"></i>&nbsp;&nbsp;Κανονική
+          Αντίθεση
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft"
+          id="btnGrayscaleOn"
+          onclick="ToggleGrayscaleMode(true);"
+          aria-disabled="false"
+        >
+          <i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;&nbsp;Γκρι
+          Απόχρωση
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft disabled"
+          id="btnGrayscaleOff"
+          onclick="ToggleGrayscaleMode(false);"
+          aria-disabled="true"
+        >
+          <i class="fa fa-barcode" aria-hidden="true"></i>&nbsp;&nbsp;Κανονική
+          Απόχρωση
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft"
+          id="btnLinksOn"
+          onclick="ToggleUnderlineLinks(true);"
+          aria-disabled="false"
+        >
+          <i class="fa fa-underline" aria-hidden="true"></i
+          >&nbsp;&nbsp;Υπογράμμιση Συνδέσμων
+        </li>
+        <li
+          class="accessibilityMenuButton alignLeft disabled"
+          id="btnLinksOff"
+          onclick="ToggleUnderlineLinks(false);"
+          aria-disabled="true"
+        >
+          <i class="fa fa-underline" aria-hidden="true"></i
+          >&nbsp;&nbsp;Κανονικοί Σύνδεσμοι
+        </li>
+      </ul>
+    </div>
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header" class="alt">
+        <span class="logo"><img src="images/logo.svg" alt="" /></span>
+        <h1>Instaklik</h1>
+        <p>Βρες αυτό που ψάχνεις</p>
+      </header>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <ul>
+          <li><a href="#intro" class="active">Intro</a></li>
+          <li><a href="#features">Δυνατότητες</a></li>
+          <li><a href="#images">Φωτογραφίες</a></li>
+          <li><a href="#footer">Επικοινωνία</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <!-- Introduction -->
+        <section id="intro" class="main">
+          <div class="spotlight">
+            <div class="content">
+              <header class="major">
+                <h2>Επεξεργαστείτε ότι χρειάζεστε με ένα κλικ</h2>
+              </header>
+              <p>
+                Sed lorem ipsum dolor sit amet nullam consequat feugiat
+                consequat magna adipiscing magna etiam amet veroeros. Lorem
+                ipsum dolor tempus sit cursus. Tempus nisl et nullam lorem ipsum
+                dolor sit amet aliquam.
+              </p>
+            </div>
+            <img src="images/phone.png" alt="" style="width: 200px" />
+          </div>
+        </section>
+
+        <!-- First Section -->
+        <section id="features" class="main special">
+          <header class="major">
+            <h2>Δυνατότητες - Λειτουργίες</h2>
+          </header>
+          <ul class="features">
+            <li>
+              <span class="icon solid major style1 fa-phone"></span>
+              <h3>Πραγματοποίηση άμεσης κλήσης</h3>
+              <p>
+                Βλέποντας μία αγγελία στην εφημερίδα αντί να αντιγράψετε το
+                νουμερο, με μια απλή φωτογραφία από το κινητό, μπορείτε να
+                καλέσετε τον αριθμό τηλεφώνου επικοινωνίας άμεσα.
+              </p>
+            </li>
+            <li>
+              <span class="icon major style3 fa-copy"></span>
+              <h3>Αποθηκευση δεδομένων</h3>
+              <p>
+                Σαρωστε κ αποθηκεύστε, τις πληροφορίες που θέλετε, από ένα απλό
+                ενοικιαστήριο, όπως η διεύθυνση κ η ευρεση αυτής στο Google maps
+                απευθείας.
+              </p>
+            </li>
+            <li>
+              <span class="icon major style5 fa-edit"></span>
+              <h3>Επεξεργασια κειμένου</h3>
+              <p>
+                Μπορείτε να πάρετε από τη φωτογραφία που έχετε τραβήξει ένα
+                κείμενο οποίο μέρος αυτού θέλετε κ να το επικολησετε σε ένα
+                μήνυμα σας.
+              </p>
+            </li>
+            <li>
+              <span class="icon major style5 fa-gem"></span>
+              <h3>Ταυτοχρονη αναζήτηση παρόμοιων στοιχείων</h3>
+              <p>
+                Χρησιμοποιώντας ηδη τα υπάρχοντα δεδομένα, έρευνα στο διαδίκτυο
+                για παρόμοια αντικειμενα όπως μια επαγγελματική κάρτα ή
+                δυνατότητα επιλογής γι άλλες παρεμφερείς ειδικότητες.
+              </p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Second Section -->
+        <section id="images" class="main special">
+          <header class="major">
+            <h2>Φωτογραφίες</h2>
+            <p>
+              Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
+              posuere. Nulla massa urna, fermentum eget quam aliquet.
+            </p>
+          </header>
+
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              align-content: space-around;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <img src="images/phone.png" alt="" style="width: 200px" />
+            <img src="images/phone.png" alt="" style="width: 200px" />
+            <img src="images/phone.png" alt="" style="width: 200px" />
+            <img src="images/phone.png" alt="" style="width: 200px" />
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <section>
+          <h2>Η εταιρία</h2>
+          <p>
+            Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat
+            magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris.
+            Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas
+            velit, vitae tincidunt odio.
+          </p>
+        </section>
+        <section>
+          <h2>Επικοινωνία</h2>
+          <dl class="alt">
+            <dt>Διεύθυνση</dt>
+            <dd>Κατερίνη 888</dd>
+            <dt>Τηλέφωνο</dt>
+            <dd>(+30) 23510-88888</dd>
+            <dt>Email</dt>
+            <dd><a href="#">instaklik@instaklik.ok</a></dd>
+          </dl>
+          <ul class="icons">
+            <li>
+              <a href="#" class="icon brands fa-twitter alt"
+                ><span class="label">Twitter</span></a
+              >
+            </li>
+            <li>
+              <a href="#" class="icon brands fa-facebook-f alt"
+                ><span class="label">Facebook</span></a
+              >
+            </li>
+            <li>
+              <a href="#" class="icon brands fa-instagram alt"
+                ><span class="label">Instagram</span></a
+              >
+            </li>
+            <li>
+              <a href="#" class="icon brands fa-github alt"
+                ><span class="label">GitHub</span></a
+              >
+            </li>
+            <li>
+              <a href="#" class="icon brands fa-dribbble alt"
+                ><span class="label">Dribbble</span></a
+              >
+            </li>
+          </ul>
+        </section>
+        <p class="copyright">2022 &copy; Instaklik</p>
+      </footer>
+    </div>
+    <script>
+      function ToggleUnderlineLinks(underline) {
+        var btnLinksOn = document.getElementById("btnLinksOnOn");
+        var btnLinksOn = document.getElementById("btnLinksOnOff");
+        var links = document.getElementsByTagName("a");
+        console.log(links);
+        if (underline) {
+          for (var i = 0; i < links.length; i++) {
+            links[i].classList.add("underline-links");
+            btnLinksOn.classList.add("disabled");
+            btnLinksOff.classList.remove("disabled");
+          }
+        } else {
+          for (var i = 0; i < links.length; i++) {
+            links[i].classList.remove("underline-links");
+            btnLinksOff.classList.add("disabled");
+            btnLinksOn.classList.remove("disabled");
+          }
+        }
+      }
+
+      function ToggleGrayscaleMode(high) {
+        var btnGrayscaleOn = document.getElementById("btnGrayscaleOn");
+        var btnGrayscaleOff = document.getElementById("btnGrayscaleOff");
+        var images = document.getElementsByTagName("img");
+        if (high) {
+          for (var i = 0; i < images.length; i++) {
+            images[i].classList.add("greyscale");
+            btnGrayscaleOn.classList.add("disabled");
+            btnGrayscaleOff.classList.remove("disabled");
+          }
+        } else {
+          for (var i = 0; i < images.length; i++) {
+            images[i].classList.remove("greyscale");
+            btnGrayscaleOff.classList.add("disabled");
+            btnGrayscaleOn.classList.remove("disabled");
+          }
+        }
+      }
+
+      function ToggleHighContrastMode(high) {
+        var btnHighContrastOn = document.getElementById("btnHighContrastOn");
+        var btnHighContrastOff = document.getElementById("btnHighContrastOff");
+        var images = document.getElementsByTagName("img");
+        if (high) {
+          for (var i = 0; i < images.length; i++) {
+            images[i].classList.add("contrast");
+            btnHighContrastOn.classList.add("disabled");
+            btnHighContrastOff.classList.remove("disabled");
+          }
+        } else {
+          for (var i = 0; i < images.length; i++) {
+            images[i].classList.remove("contrast");
+            btnHighContrastOff.classList.add("disabled");
+            btnHighContrastOn.classList.remove("disabled");
+          }
+        }
+      }
+
+      function setTextSize(big) {
+        var body = document.getElementsByTagName("BODY")[0];
+        var btnTextSizeOn = document.getElementById("btnTextSizeOn");
+        var btnTextSizeOff = document.getElementById("btnTextSizeOff");
+        if (big) {
+          body.style.fontSize = "2rem";
+          btnTextSizeOn.classList.add("disabled");
+          btnTextSizeOff.classList.remove("disabled");
+        } else {
+          body.style.fontSize = "1rem";
+          btnTextSizeOff.classList.add("disabled");
+          btnTextSizeOn.classList.remove("disabled");
+        }
+      }
+      function getDate() {
+        document.querySelector(".copyright").innerHTML =
+          new Date().getFullYear() + " © instaclik";
+      }
+
+      function toggleAccessibilityMenu() {
+        var open = document.getElementById("slideout").style.left;
+        if (open === "0px")
+          document.getElementById("slideout").style.left = "-250px";
+        else document.getElementById("slideout").style.left = "0px";
+      }
+    </script>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
